@@ -98,14 +98,6 @@ Install http server globally
 
 Run the http server
 
-
-
-Need to have http server ——
-
-Install http server globally
-
-Run the http server
-
 How Does This Issue Affect Web Workers?
 Example Without an HTTP Server:
 If you try to open a page with a Web Worker from file://, you may get an error like this:
@@ -115,7 +107,7 @@ Failed to construct 'Worker': Script at 'file:///path/to/worker.js' cannot be ac
 This is because the worker script (worker.js) cannot be loaded from a file:// origin, as it is considered insecure by the browser.
 
 
-
+______________
 
 
 
