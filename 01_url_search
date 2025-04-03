@@ -1,0 +1,97 @@
+When you enter a URL in your browser and press Enter-
+
+
+1.1. URL Parsing
+When you type a URL (Uniform Resource Locator), the browser needs to break it down to understand how to reach the resource. For example:
+
+Url-
+https://www.example.com/index.html
+The URL is parsed into several parts:
+
+* Scheme: https:// — This tells the browser which protocol to use. The common ones are HTTP (http://) and HTTPS (https://), where HTTPS is the secure version.
+
+* Domain name: www.example.com — This represents the website's address.
+
+* Path: /index.html — This is the location of the resource on the web server.
+
+
+2. DNS Resolution
+The browser needs to convert the human-readable domain name (www.example.com) into an IP address that a computer can use to find the server where the resource is hosted. This is done using the Domain Name System (DNS).
+* The browser checks the DNS cache on your device (stored recently accessed domain names) to see if it already knows the IP address.
+* If it's not cached, the browser queries a DNS server, often provided by your ISP (Internet Service Provider), to resolve the domain to an IP address.
+* If the DNS server can’t resolve it, it may ask other DNS servers in a chain until it finds the IP address or returns an error.
+
+
+
+.3. TCP/IP Connection
+Once the IP address is obtained, the browser needs to establish a connection with the server that hosts the website. This is done via the Transmission Control Protocol (TCP).
+* The browser contacts the server at the resolved IP address and requests to open a connection using the TCP protocol.
+* Three-way handshake:
+    1. The browser sends a SYN (synchronize) packet to the server to initiate a connection.
+    2. The server responds with a SYN-ACK (synchronize-acknowledge) packet to confirm the connection.
+    3. The browser sends an ACK (acknowledge) packet, and the connection is established.
+* If the connection is over HTTPS, an additional step takes place: the TLS/SSL handshake. This involves:
+    * The browser and server agreeing on encryption methods.
+    * The server proving its identity with a digital certificate.
+    * Establishing an encrypted link to ensure data privacy.
+
+
+
+4. Sending the HTTP Request
+Once the TCP connection is established, the browser sends an HTTP request to the server for the resource. The browser requests the page you wanted, such as index.html, by sending an HTTP GET request (or another type of request like POST, if necessary).
+The request includes headers like:
+* User-Agent: Information about your browser and device.
+* Accept: What types of data the browser can handle (like HTML, images, etc.).
+* Cookie: Any saved session information, which could include your login credentials or preferences.
+
+
+5. Server Processing
+The server receives the HTTP request and processes it. Depending on the request, this could involve:
+* Serving static content: If you're requesting an HTML page or image, the server sends the requested file back as-is.
+* Running dynamic code: If you're requesting a page that requires processing (e.g., a form submission or dynamic page generation), the server might run scripts (PHP, Python, Node.js, etc.), query a database, and generate HTML before sending it back.
+
+
+
+6. HTTP Response
+Once the server processes the request, it sends an HTTP response back to the browser. This response includes:
+* Status Code: A three-digit code indicating the result of the request. Common codes include:
+    * 200 OK: The request was successful.
+    * 404 Not Found: The requested resource could not be found.
+    * 500 Internal Server Error: The server encountered an error.
+* Headers: Metadata about the response, such as content type (HTML, JSON, etc.) and caching information.
+* Body: The actual content being sent, like HTML, CSS, JavaScript, images, etc.
+
+
+
+7. Rendering the Page
+Once the browser receives the HTTP response, it processes the response body (e.g., HTML code) to render the page:
+* HTML Parsing: The browser begins parsing the HTML structure, creating the DOM (Document Object Model), which represents the page's elements.
+* CSS Parsing: Any CSS linked or embedded within the HTML is parsed to style the elements on the page.
+* JavaScript Execution: If the page contains JavaScript, the browser executes it to handle interactivity or dynamic content.
+* The browser makes additional requests if needed (for images, fonts, additional JavaScript files, etc.) and updates the DOM as the resources are loaded.
+* Page Layout & Rendering: Once all elements are styled, the page is laid out and drawn on the screen.
+
+
+
+8. Closing the Connection
+After the page is fully loaded, the browser may choose to close the TCP connection. In the case of persistent connections (HTTP/1.1 or HTTP/2), the connection can be reused for further requests to the same server to improve performance.
+
+9. Browser Cache and Cookies
+To improve performance and save bandwidth, the browser may cache static resources (like images, CSS, and JavaScript) and store cookies for future sessions. Cookies help keep users logged in or maintain preferences.
+
+10. Additional Considerations
+* Security: If you’re visiting an HTTPS site, your data is encrypted to protect it from third-party interference.
+* Redirects: If the server decides that the requested resource has moved, it may send a redirect (like a 301 or 302 status code) to a different URL.
+* Third-Party Requests: While the browser is rendering the page, it may also request resources from other domains (such as ads or analytics scripts), which can affect the page’s load time and functionality.
+
+Recap of the Entire Process:
+1. URL parsing.
+2. DNS resolution to get the IP address.
+3. TCP/IP handshake to establish a connection.
+4. HTTP request to the server.
+5. Server processing and generating an HTTP response.
+6. HTML, CSS, and JavaScript rendering on the browser.
+7. Page display and resource fetching.
+8. Caching and cookie storage for future visits.
+
+It’s amazing how many steps happen in a fraction of a second to load a single webpage!
