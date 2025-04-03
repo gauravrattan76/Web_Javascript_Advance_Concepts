@@ -1,0 +1,125 @@
+
+__________________
+
+
+Web workers-
+
+Web Workers allow JavaScript to run in the background without blocking the main UI thread. They are particularly useful for performing resource-heavy computations or tasks (like calculations or data fetching) while keeping the user interface responsive.
+
+
+1. The Main Thread (UI Thread)
+This is the primary JavaScript code that interacts with the user interface and the Web Worker. The main thread creates the worker, sends data to the worker, and handles the results from the worker.
+2. The Worker Thread
+The Web Worker executes code in a separate thread and does not have direct access to the DOM or UI. It can perform calculations or other tasks without blocking the main thread. The worker communicates with the main thread through postMessage() and onmessage.
+
+
+
+Worker.js file -
+
+
+self.onmessage = function (e) {
+    const val = e.data;
+    console.log('Worker received data is', val);
+
+    let fact = 0;
+    function factorial(n) {
+        if (n <= 1) return 1;
+      
+            fact = n * factorial(n - 1);
+            return fact;
+        
+    }
+
+    const result = factorial(val)
+    console.log('result for printing is', result)
+    postMessage(result);
+}
+
+
+
+Explanation:
+* onmessage: This function listens for messages from the main thread. The data passed from the main thread is available through event.data. In this case, it will receive a number to calculate the factorial of.
+* Factorial calculation: The worker calculates the factorial by multiplying numbers from 1 to the received number.
+* postMessage(result): Once the factorial calculation is done, the worker sends the result back to the main thread using postMessage().
+
+
+____________
+
+
+Main.js file -
+
+
+
+const worker = new Worker("worker.js");
+
+//  Send a number to the worker to calculate factorial
+worker.postMessage({ num: 5});
+
+
+//     Set up the handler for the result received from the worker
+worker.onmessage = function(e) {
+    const result = e.data; // Data received from the worker
+    console.log('Result from worker:data is ', result);
+};
+
+//  // Set up the error handler for the worker
+worker.onerror = function(error) {
+    console.error('Worker error:', error.message);
+};
+
+
+_________
+
+
+index.html-
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Web Worker Test</title>
+</head>
+<body>
+    <h1>Web Worker Example</h1>
+    <script src="./main.js"> 
+    </script>
+</body>
+</html>
+
+
+
+_________________
+
+
+Need to have http server ——
+
+Install http server globally
+
+Run the http server
+
+
+
+Need to have http server ——
+
+Install http server globally
+
+Run the http server
+
+How Does This Issue Affect Web Workers?
+Example Without an HTTP Server:
+If you try to open a page with a Web Worker from file://, you may get an error like this:
+pgsql
+Copy
+Failed to construct 'Worker': Script at 'file:///path/to/worker.js' cannot be accessed from origin 'null'.
+This is because the worker script (worker.js) cannot be loaded from a file:// origin, as it is considered insecure by the browser.
+
+
+
+
+
+
+
+
+
+
